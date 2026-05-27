@@ -1,12 +1,12 @@
 from flask import Flask, render_template, redirect, url_for, request
 import uuid
 
+import os
+
 app = Flask(__name__)
 
 todo_data = []
 
-
-# list = ["Купить тетради", "Сходить на тренеровку", "Покушать"]
 
 @app.route("/")
 def index():
@@ -25,10 +25,7 @@ def add_item():
             "text":  text,
             "status": False,
         }
-
         todo_data.append(item)
-        print(todo_data)
-
         return redirect(url_for("index"))
 
 
@@ -51,4 +48,5 @@ def delete(id):
 
 
 if __name__ == '__main__':
-    app.run()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
