@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+    <section>
+        <div class="container">
+            <h1 class="main-title">Приложение список дел</h1>
+            <div class="block">
+                <form action="/add_item" method="post" class="form">
+                    <label class="label">
+                        <input class="input" name="text" type="text" placeholder="Новое дело">
+                    </label>
+                    <button class="button">Добавить</button>
+                </form>
+
+<!--                {% for item in db %}-->
+<!--                    <div>{{ item }}</div>-->
+<!--                {% endfor %}-->
+                {% if db | length > 0 %}
+
+                    <div class="list-wrapper">
+                        <ul class="todo_list">
+                            {% for item in db %}
+                                {% if item["status"] %}
+                                    <li class="item success">
+                                        <span class="text">{{ item["text"] }}</span>
+                                        <div>
+                                            <a class="btn" href="/delete/{{item['id']}}">Удалить дело</a>
+                                            <a class="btn done" href="/change_item/{{item['id']}}">Не выполнено</a>
+                                        </div>
+
+                                    </li>
+                                {% else %}
+                                    <li class="item">
+                                        <span class="text">{{ item["text"] }}</span>
+                                        <div>
+                                            <a class="btn" href="/delete/{{item['id']}}">Удалить дело</a>
+                                            <a class="btn done" href="/change_item/{{item['id']}}">Выполнено</a>
+                                        </div>
+                                    </li>
+                                {%endif%}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</body>
+</html>
